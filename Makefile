@@ -2,7 +2,7 @@ FBASE:=$(shell pwd )
 STABLEFPC=${FBASE}/bootstrap/ppcx64_300
 FPCSOURCE=${FBASE}/source/fpc-trunk.tar.xz
 
-ARMOPT=-Cparmv7a -CfVFPv3 -dFPC_armHF 
+ARMOPT=-Cparmv7a -CfVFPv3 -dFPC_ARMHF 
 
 upclean:
 	source/upclean
@@ -14,6 +14,9 @@ prepare: clean
 	mkdir "${FBASE}/build/" "${FBASE}/dist/"
 	cd "${FBASE}/build/" ; tar xf "${FPCSOURCE}"
 
+svn: clean
+	mkdir "${FBASE}/build/" "${FBASE}/dist/"
+	cd "${FBASE}/build/" ; svn co http://svn.freepascal.org/svn/fpc/trunk fpc
 centos:
 	cd "${FBASE}/build/fpc" ; make FPC="${STABLEFPC}" distclean ; make FPC="${STABLEFPC}" all singlezipinstall
 	cp build/fpc/*.gz dist/
