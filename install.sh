@@ -5,7 +5,7 @@
 cd $(dirname "$0")
 BD=$(pwd)
 echo "${BD}"
-
+sleep 5
 make svn centos arm
 cd /usr/
 tar xf ${BD}/dist/fpc-3.1.1.x86_64-linux.tar.gz 
