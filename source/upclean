@@ -1,0 +1,61 @@
+#!/bin/bash
+# This updates the clean repos and tars them
+#
+cd $(dirname "$0")
+BD=$(pwd)
+echo "${BD}"
+
+FPCFIXES="fixes_3_0"
+
+FPCTRUNKDIR="${BD}/trunk"
+FPCFIXESDIR="${BD}/${FPCFIXES}"
+
+if [ ! -d "${FPCTRUNKDIR}/fpc" ]; then
+  echo "Inital checkout ..."
+  mkdir "${FPCTRUNKDIR}"
+  cd "${FPCTRUNKDIR}"
+  svn checkout http://svn.freepascal.org/svn/fpc/trunk fpc
+  tar cJf ../fpc-trunk.tar.xz fpc
+else
+  cd "${FPCTRUNKDIR}" 
+  echo "Checking fpc trunk ..."
+  svn stat -u fpc |grep "*" > /dev/null && ( echo "new files" ; svn up fpc ; tar cJf ../fpc-trunk.tar.xz fpc )
+fi
+
+cd "${BD}"
+
+if [ ! -d "${FPCFIXESDIR}/fpc" ]; then
+  echo "Inital checkout ..."
+  mkdir "${FPCFIXESDIR}"
+  cd "${FPCFIXESDIR}"
+  svn checkout "http://svn.freepascal.org/svn/fpc/branches/${FPCFIXES}" fpc
+  tar cJf "../fpc-${FPCFIXES}.tar.xz" fpc
+else
+  cd "${FPCFIXESDIR}" 
+  echo "Checking fpc trunk ..."
+  svn stat -u fpc |grep "*" > /dev/null && ( echo "new files" ; svn up fpc ; tar cJf "../fpc-${FPCFIXES}.tar.xz" fpc )
+fi
+
+
+#cd fixes_30 
+#echo "Checking fpc fixes_30 ..."
+#svn stat -u fpc |grep "*" > /dev/null && ( echo "new files" ; svn up fpc ; tar cJf ../fixes_30.tar.xz fpc )
+#cd ..
+
+#cd laz-trunk
+#echo "Checking lazarus trunk ..."
+#svn stat -u lazarus |grep "*" > /dev/null && ( echo "new files" ; svn up lazarus ; tar cjf ../lazarus-trunk.tar.bz2 lazarus )
+#cd ..
+
+
+echo "Done."
+
+cd "${BD}"
+
+#echo "lazarus trunk:    `svn info laz-trunk/lazarus |grep "Rev:"`"
+#echo "lazarus fixes-30: `svn info laz-fixes-30/lazarus |grep "Rev:"`"
+echo "fpc trunk:        `svn info ${FPCTRUNKDIR}/fpc |grep "Rev:"`"
+echo "fpc ${FPCFIXES}:      `svn info ${FPCFIXESDIR}/fpc |grep "Rev:"`"
+
+date
+
