@@ -17,4 +17,6 @@ ln -sf ../lib/fpc/3.1.1/ppcx64 ppcx64
 cd ..
 lib/fpc/3.1.1/samplecfg 
 lib/fpc/3.1.1/samplecfg /usr/lib/fpc/3.1.1/ /etc
+cd ${BD}
+cat add-fpc.cfg >> /etc/fpc.cfg
 
