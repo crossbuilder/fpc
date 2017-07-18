@@ -1,5 +1,5 @@
 FBASE:=$(shell pwd )
-STABLEFPC=${FBASE}/bootstrap/ppcx64_300
+STABLEFPC=${FBASE}/bootstrap/ppcx64_302
 BUILTFPC=${FBASE}/build/fpc/compiler/ppcx64
 NEWFPC=${FBASE}/build/ppcx64
 
